@@ -10,11 +10,13 @@ function Y=GDFT(X)
 % X = gdft(x)  Y = gdft(y)
 % X*Y' = sum(x.*y) + i*sum(x.*imag(hilbert(y)))
 
-
-if size(X,1)==1, X=X(:); Transpose=1; else Transpose=0; end;
+if (size(X,1)==1) X = X.'; end;
+Dims  = size(X);
+X=X(:,:);
 Len=size(X,1)/2; Len=ceil(Len); if size(X,1)<(2*Len), X(2*Len,1)=0; end;
 Z  =fft((X(1:Len,:) - X(Len+1:2*Len,:)*i) .* (exp(-(0:Len-1)'*i*pi/Len/2)*ones(1,size(X,2))));
 Y(1:2:Len,:) = Z(1:floor((Len+1)/2),:)/sqrt(Len);
 Y(2:2:Len,:) = conj(Z(Len:-1:ceil(Len/2+1),:))/sqrt(Len);
+Dims(1)=size(Y,1);
+Y = reshape(Y,Dims);
 
-if Transpose, Y=Y.'; end;

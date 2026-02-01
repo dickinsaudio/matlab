@@ -41,6 +41,6 @@ for p=1:2
 end;
 
 semilogx(F(1:floor(end/2)),10*log10(X(1:floor(end/2),:)),varargin{:});
-axis([100 Fs/2 -40 10]);
+axis([Fs/4800 Fs/2 -40 10]);
 
 
